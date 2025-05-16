@@ -1,0 +1,8 @@
+.input-form {
+    min-width: 600px;
+}
+
+.address {
+    border-bottom: 1px solid lightgray;
+    width: 100%;
+}

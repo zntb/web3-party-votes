@@ -1,0 +1,67 @@
+.party-card-div {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.party-card {
+    border: 4px solid black;
+    border-radius: 10px;
+    margin-inline: 20px;
+    padding-inline: 16px;
+    padding-block: 10px;
+    min-width: 300px;
+    margin-bottom: 20px;
+}
+
+.card-title {
+    font-size: x-large;
+    font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    font-weight: 800;
+    padding-bottom: 4px;
+    margin-bottom: 8px;
+    border-bottom: 1px solid grey;
+}
+
+.card-description {
+    font-size: medium;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.vote-bar-div {
+    max-height: 280px;
+    display: flex;
+    justify-content: center;
+}
+
+.token-container {
+    display: flex;
+    justify-content: center;
+}
+
+.token-div {
+    width: 400px;
+    margin-top: 60px;
+    border: 1px solid lightgray;
+    border-radius: 10px;
+    padding: 10px;
+    line-height: 2.5;
+}
+
+.d-flex {
+    justify-content: space-between;
+}
+
+.no-party {
+    display: flex;
+    justify-content: center; 
+    align-items: center;
+    margin-left: 50px;
+    margin-right: 50px;
+}
+
+.no-party h4 {
+    text-align: center;
+    line-height: 2;
+}
