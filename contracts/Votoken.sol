@@ -23,19 +23,24 @@ contract Votoken is ERC20 {
     }
 
     // Override transfer function to prevent transfers
-    function transfer(address recipient, uint256 amount) public pure override returns (bool) {
+    function transfer(address, /*recipient*/ uint256 /*amount*/ ) public pure override returns (bool) {
         require(false, "This token cannot be transferred");
         return false;
     }
 
     // Override transferFrom function to prevent transfers
-    function transferFrom(address sender, address recipient, uint256 amount) public pure override returns (bool) {
+    function transferFrom(address, /*sender*/ address, /*recipient*/ uint256 /*amount*/ )
+        public
+        pure
+        override
+        returns (bool)
+    {
         require(false, "This token cannot be transferred");
         return false;
     }
 
     // Override approve function to prevent allowance approvals
-    function approve(address spender, uint256 amount) public pure override returns (bool) {
+    function approve(address, /*spender*/ uint256 /*amount*/ ) public pure override returns (bool) {
         require(false, "Approval is not allowed for this token");
         return false;
     }
