@@ -13,10 +13,19 @@ async function main() {
 
   // deploying voting contract
   const Party = await ethers.getContractFactory('PartyVote');
-  const party = await Party.deploy('Republicans', tokenContractAddress); // add party on initialised deployment
+  const party = await Party.deploy('Republicans', tokenContractAddress); // Initial party
+
   await party.waitForDeployment();
   const partyContractAddress = await party.getAddress();
   console.log('Party address:', partyContractAddress);
+
+  // Add Democrats party after deployment
+  const partyContract = await ethers.getContractAt(
+    'PartyVote',
+    partyContractAddress,
+  );
+  await partyContract.addParty('Democrats');
+  console.log('Added Democrats party');
 }
 
 main()

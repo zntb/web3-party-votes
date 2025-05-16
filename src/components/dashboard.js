@@ -77,6 +77,14 @@ const getRandomColor = () => {
   return color;
 };
 
+const getPartyColor = partyName => {
+  const partyColors = {
+    Republicans: '#E91D0E', // Republican red
+    Democrats: '#232066', // Democrat blue
+  };
+  return partyColors[partyName] || getRandomColor(); // Fallback to random for other parties
+};
+
 const Dashboard = () => {
   const { account, isConnected } = useContext(AccountContext);
   const [tokenSupply, setTokenSupply] = useState({
@@ -104,7 +112,7 @@ const Dashboard = () => {
       return {
         name: party[0],
         count: Number(party[1]),
-        color: getRandomColor(),
+        color: getPartyColor(party[0]), // Use the new function
       };
     });
     setShowParty(partiesWithColor?.length > 0 ? true : false);
