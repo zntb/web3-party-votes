@@ -27,6 +27,7 @@ const Profile: React.FC = () => {
 
   useEffect(() => {
     if (account) getVoter();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [account]);
 
   return (

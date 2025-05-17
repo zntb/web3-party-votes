@@ -95,6 +95,7 @@ const Dashboard: React.FC = () => {
 
   useEffect(() => {
     if (isConnected) initialise();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isConnected]);
 
   const handleOnClick = (name: string) => {
