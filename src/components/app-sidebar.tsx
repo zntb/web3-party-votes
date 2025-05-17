@@ -5,7 +5,7 @@ import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { AccountContext } from '@/app/Provider';
 import { checkOwner } from '../utils/contractUtilities';
-import { Home, User, Plus, Search, ChevronRight } from 'lucide-react';
+import { Home, User, Plus, Search } from 'lucide-react';
 import {
   Sidebar,
   SidebarContent,

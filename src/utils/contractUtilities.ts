@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
+
 import { ethers } from 'ethers';
 import votokenABI from '../ABIs/Votoken.json';
 import partyVoteABI from '../ABIs/PartyVote.json';
@@ -149,10 +151,12 @@ export const addParty = async (name: string): Promise<void> => {
     await tx.wait();
     toast.success(`Successfully added ${name} to the party!`);
   } catch (error) {
+    console.error('Something went wrong - Adding party rejected!', error);
     toast.error('Adding party rejected!');
   }
 };
 
+// eslint-disable-next-line @typescript-eslint/no-wrapper-object-types
 export const getParties = async (): Promise<Array<[string, BigInt]>> => {
   if (!voteContract) throw new Error('Vote contract not initialized');
   return await voteContract.getParties();
@@ -185,6 +189,7 @@ export const getVotes = async (voter: string): Promise<any | null> => {
     const votes = await voteContract.getVotes(voter);
     return votes ?? null;
   } catch (error) {
+    console.error('Address not found! Please enter a valid address', error);
     toast.error('Address not found! Please enter a valid address');
     return null;
   }

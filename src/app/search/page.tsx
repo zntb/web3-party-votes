@@ -10,6 +10,7 @@ const Search = () => {
   const [searched, setSearched] = useState(false);
   const [address, setAddress] = useState('');
   const [displayAddress, setDisplayAddress] = useState('');
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const [voter, setVoter] = useState<any>();
   const [isLoading, setIsLoading] = useState(false);
 
