@@ -8,16 +8,19 @@
     "@testing-library/jest-dom": "^5.17.0",
     "@testing-library/react": "^13.4.0",
     "@testing-library/user-event": "^13.5.0",
+    "ajv": "^8.17.1",
+    "bootstrap": "^5.3.6",
     "cdbreact": "^1.5.19",
     "chart.js": "^4.4.4",
     "dayjs": "^1.11.13",
     "dotenv": "^16.4.5",
     "ethers": "^6.13.2",
     "react": "^19.1.0",
+    "react-bootstrap": "^2.10.10",
     "react-chartjs-2": "^5.2.0",
     "react-dom": "^19.1.0",
     "react-router-dom": "^7.6.0",
-    "react-scripts": "5.0.1",
+    "react-scripts": "^5.0.1",
     "web-vitals": "^2.1.4"
   },
   "scripts": {
@@ -49,6 +52,7 @@
   },
   "devDependencies": {
     "@nomicfoundation/hardhat-toolbox": "^5.0.0",
+    "@types/react-bootstrap": "^1.0.1",
     "hardhat": "^2.22.9"
   }
 }
