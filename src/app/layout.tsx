@@ -8,6 +8,7 @@ import { AppSidebar } from '@/components/app-sidebar';
 
 import './globals.css';
 import { ModeToggle } from '@/components/mode-toogle';
+import { ConnectButton } from '@/components/connect-button';
 
 const geistSans = Geist({
   variable: '--font-geist-sans',
@@ -43,10 +44,14 @@ export default function RootLayout({
           >
             <SidebarProvider>
               <AppSidebar />
-              <main className='flex flex-1 flex-col gap-4 p-4 pt-0 w-full h-screen'>
-                <div className='flex gap-3 items-center'>
-                  <SidebarTrigger />
-                  <ModeToggle />
+              <main className='flex flex-1 flex-col gap-4 p-4  pt-2 w-full h-screen'>
+                <div className='flex gap-3 items-center justify-between nth-last-[2]:mr-32'>
+                  <div className='space-x-3'>
+                    <SidebarTrigger />
+                    <ModeToggle />
+                  </div>
+
+                  <ConnectButton />
                 </div>
                 {children}
               </main>
