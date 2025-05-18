@@ -41,6 +41,7 @@
     "@nomicfoundation/hardhat-toolbox": "^5.0.0",
     "@nomicfoundation/hardhat-verify": "^2.0.13",
     "@tailwindcss/postcss": "^4",
+    "@typechain/hardhat": "^9.1.0",
     "@types/node": "^20",
     "@types/react": "^19",
     "@types/react-chartjs-2": "^2.0.2",
