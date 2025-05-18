@@ -20,13 +20,27 @@ export let voteContract: ethers.Contract | null = null;
 interface WindowWithEthereum extends Window {
   ethereum?: {
     request: (request: { method: string; params?: any }) => Promise<any>;
+    isMetaMask?: boolean;
   };
 }
 
 declare const window: WindowWithEthereum;
 
+// utils/mobileDetect.ts
+export const isMobile = (): boolean => {
+  return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(
+    navigator.userAgent,
+  );
+};
+
 export const initializeContracts = async (): Promise<boolean> => {
   try {
+    // Check if we're on mobile and use WalletConnect if needed
+    if (isMobile() && !window.ethereum) {
+      // Handle mobile case (we'll implement this next)
+      return await initializeMobileWallet();
+    }
+
     if (!window.ethereum) {
       throw new Error('Ethereum provider not found');
     }
@@ -47,6 +61,33 @@ export const initializeContracts = async (): Promise<boolean> => {
     return true;
   } catch (e) {
     console.error('Failed to initialize contracts:', e);
+    return false;
+  }
+};
+
+const initializeMobileWallet = async (): Promise<boolean> => {
+  try {
+    // Check if MetaMask is installed
+    if (window.ethereum?.isMetaMask) {
+      // Request account access
+      await window.ethereum.request({ method: 'eth_requestAccounts' });
+      return await initializeContracts(); // Will now use the mobile MetaMask provider
+    }
+
+    // Handle case where user doesn't have MetaMask installed
+    const userAgent = navigator.userAgent.toLowerCase();
+    const isAndroid = userAgent.includes('android');
+
+    if (isAndroid) {
+      window.location.href = `https://metamask.app.link/dapp/${window.location.host}${window.location.pathname}`;
+    } else {
+      // iOS
+      window.location.href = `https://metamask.app.link/dapp/${window.location.host}${window.location.pathname}`;
+    }
+
+    return false;
+  } catch (error) {
+    console.error('Mobile wallet connection failed:', error);
     return false;
   }
 };
