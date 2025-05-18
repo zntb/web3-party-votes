@@ -227,11 +227,16 @@ export const callVote = async (name: string): Promise<void> => {
 export const getVotes = async (voter: string): Promise<any | null> => {
   try {
     if (!voteContract) throw new Error('Vote contract not initialized');
+
+    // Validate the address first
+    if (!ethers.isAddress(voter)) {
+      throw new Error('Invalid Ethereum address');
+    }
+
     const votes = await voteContract.getVotes(voter);
     return votes ?? null;
   } catch (error) {
-    console.error('Address not found! Please enter a valid address', error);
-    toast.error('Address not found! Please enter a valid address');
+    console.error('Error fetching votes:', error);
     return null;
   }
 };

@@ -5,7 +5,7 @@ import dayjs from 'dayjs';
 import { Card, CardContent } from '@/components/ui/card';
 import Link from 'next/link';
 
-interface VoterData {
+export interface VoterData {
   name: string;
   hasVoted: boolean;
   party: string | number | null;
