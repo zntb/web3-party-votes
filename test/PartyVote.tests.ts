@@ -2,17 +2,18 @@
 import { expect } from 'chai';
 import hre from 'hardhat';
 import { PartyVote, MockTokenContract } from '../typechain-types';
-import { Signer } from 'ethers';
+import { HardhatEthersSigner } from '@nomicfoundation/hardhat-ethers/signers';
 
 const { ethers } = hre;
 
 describe('PartyVote Contract', function () {
   let partyVote: PartyVote;
   let mockToken: MockTokenContract;
-  let owner: Signer;
-  let voter1: Signer;
-  let voter2: Signer;
-  let voter3: Signer;
+  let owner: HardhatEthersSigner;
+  let voter1: HardhatEthersSigner;
+  let voter2: HardhatEthersSigner;
+  let voter3: HardhatEthersSigner;
+
   let ownerAddress: string;
   const initialPartyName = 'Party A';
 
