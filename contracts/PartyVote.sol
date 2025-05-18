@@ -20,24 +20,28 @@ contract PartyVote is Ownable {
         uint256 count;
     }
 
-    struct Votes {
-        Party party;
+    struct VoteInfo {
+        uint256 partyIndex; // Save index instead of full struct
         bool hasVoted;
         uint256 time;
     }
 
-    mapping(address => Votes) private votes;
+    mapping(address => VoteInfo) private votes;
     uint256 public totalVoteUsed;
     Party[] private parties;
+
+    event PartyAdded(string name, uint256 index);
+    event Voted(address indexed voter, string party, uint256 time);
 
     constructor(string memory name, address tokenAddress) Ownable(msg.sender) {
         token = ITokenContract(tokenAddress);
         parties.push(Party(name, 0));
+        emit PartyAdded(name, 0);
     }
 
     function addParty(string memory name) public onlyOwner {
-        Party memory party = Party(name, 0);
-        parties.push(party);
+        parties.push(Party(name, 0));
+        emit PartyAdded(name, parties.length - 1);
     }
 
     function getParties() public view returns (Party[] memory) {
@@ -56,15 +60,19 @@ contract PartyVote is Ownable {
         for (uint256 i = 0; i < parties.length; i++) {
             if (keccak256(bytes(parties[i].name)) == keccak256(bytes(name))) {
                 parties[i].count += 1;
-                votes[msg.sender] = Votes({party: parties[i], hasVoted: true, time: block.timestamp});
+                votes[msg.sender] = VoteInfo({partyIndex: i, hasVoted: true, time: block.timestamp});
                 totalVoteUsed++;
+                emit Voted(msg.sender, name, block.timestamp);
                 return;
             }
         }
+
         revert vote__noParty();
     }
 
-    function getVotes(address voter) public view returns (Votes memory) {
-        return votes[voter];
+    function getVotes(address voter) public view returns (string memory name, bool hasVoted, uint256 time) {
+        VoteInfo memory v = votes[voter];
+        if (!v.hasVoted) return ("", false, 0);
+        return (parties[v.partyIndex].name, true, v.time);
     }
 }

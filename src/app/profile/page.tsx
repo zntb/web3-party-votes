@@ -15,7 +15,7 @@ interface VoterData {
 }
 
 const Profile: React.FC = () => {
-  const { account, login, logout, inProgress } = useContext(AccountContext);
+  const { account } = useContext(AccountContext);
   const router = useRouter();
   const [voter, setVoter] = useState<VoterData | null>(null);
 
@@ -39,9 +39,6 @@ const Profile: React.FC = () => {
           <p className='text-gray-600 max-w-md'>
             By registering or logging in, you will be connected to your wallet
           </p>
-          <Button onClick={login} size='lg' disabled={inProgress}>
-            {inProgress ? 'Logging in...' : 'Login'}
-          </Button>
         </div>
       ) : (
         <div className='w-full max-w-md space-y-6'>
@@ -54,17 +51,6 @@ const Profile: React.FC = () => {
               </Button>
             </div>
           )}
-
-          <div className='text-center'>
-            <Button
-              variant='destructive'
-              onClick={logout}
-              size='lg'
-              className='mt-2'
-            >
-              Logout
-            </Button>
-          </div>
         </div>
       )}
     </div>

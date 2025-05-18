@@ -5,7 +5,7 @@ import dayjs from 'dayjs';
 import { Card, CardContent } from '@/components/ui/card';
 import Link from 'next/link';
 
-interface VoterData {
+export interface VoterData {
   name: string;
   hasVoted: boolean;
   party: string | number | null;
@@ -22,7 +22,6 @@ const VoteCard: React.FC<VoteCardProps> = ({ account, voter }) => {
     return dayjs(date).format('DD MMM YYYY, HH:mm:ss');
   };
 
-  const voterName = voter?.name.slice(0, -1);
   const address = `https://sepolia.etherscan.io/address/${account}`;
 
   return (
@@ -43,7 +42,7 @@ const VoteCard: React.FC<VoteCardProps> = ({ account, voter }) => {
         </div>
         <div className='flex justify-between'>
           <span className='text-gray-600'>Voted for</span>
-          <span className='font-medium'>{voterName ?? '--'}</span>
+          <span className='font-medium'>{voter?.name ?? '--'}</span>
         </div>
         <div className='flex justify-between'>
           <span className='text-gray-600'>Voted on</span>
