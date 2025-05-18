@@ -180,6 +180,11 @@ const AccountProvider = ({ children }: AccountProviderProps) => {
         method: 'eth_requestAccounts',
       });
       const selectedAccount = accounts[0];
+
+      // Initialize contracts first
+      await initializeContracts();
+
+      // Try to mint token (it will handle the case where user already has token)
       const loggedIn = await mintToken();
 
       if (loggedIn) {
@@ -230,6 +235,11 @@ const AccountProvider = ({ children }: AccountProviderProps) => {
   const login = async () => {
     if (isMobile && !window.ethereum?.isMetaMask) {
       await connectWithWalletConnect();
+      const minted = await mintToken();
+
+      if (minted) {
+        setIsConnected(true);
+      }
     } else {
       await connectWithMetaMask();
     }
