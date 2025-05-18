@@ -6,13 +6,12 @@ import partyVoteABI from '../ABIs/PartyVote.json';
 import { toast } from 'sonner';
 
 export const TOKEN_CONTRACT_ADDRESS =
-  '0xdC8FAADA30D9E1fE5223f1d57c0b553DF564281e';
+  '0xF187D36Fd8796bbf4Cd844aE8E444d624c76ede3';
 export const VOTE_CONTRACT_ADDRESS =
-  '0x7C94Dbd3b264e3f96c3d5117ed853aE98d7ca9C6';
+  '0x9Bd9dd892657f0293348a72D0d7f4E996D1F72E0';
 
 const ERROR_DONE_VOTING = 'vote__doneVoting';
 const ERROR_NO_TOKEN = 'vote__noToken';
-const ERROR_GOT_TOKEN = 'mint__gotToken';
 
 export let tokenContract: ethers.Contract | null = null;
 export let voteContract: ethers.Contract | null = null;
@@ -139,6 +138,19 @@ const getUsedToken = async (): Promise<number> => {
 export const mintToken = async (): Promise<boolean> => {
   try {
     if (!tokenContract) throw new Error('Token contract not initialized');
+
+    // Get the signer's address
+    const signer = tokenContract.runner as ethers.Signer;
+    if (!signer) throw new Error('No signer available');
+    const signerAddress = await signer.getAddress();
+
+    // First check if user already has minted using the contract's hasAlreadyMinted function
+    const alreadyMinted = await tokenContract.hasAlreadyMinted(signerAddress);
+    if (alreadyMinted) {
+      console.log('User already minted token');
+      return true;
+    }
+
     const tx = await tokenContract.mint();
     console.log('Mint transaction:', tx);
     await tx.wait();
@@ -151,11 +163,12 @@ export const mintToken = async (): Promise<boolean> => {
       toast.error(
         'Token minting has been rejected! Please relogin again and accept the request.',
       );
-    } else if (errorName === ERROR_GOT_TOKEN) {
+    } else if (errorName === 'MintAlreadyMinted') {
       console.log('User already got the token');
       return true;
     } else {
       toast.error('Token minting failed! Please relogin again!');
+      console.error('Minting error:', error);
     }
     return false;
   }
@@ -227,11 +240,16 @@ export const callVote = async (name: string): Promise<void> => {
 export const getVotes = async (voter: string): Promise<any | null> => {
   try {
     if (!voteContract) throw new Error('Vote contract not initialized');
+
+    // Validate the address first
+    if (!ethers.isAddress(voter)) {
+      throw new Error('Invalid Ethereum address');
+    }
+
     const votes = await voteContract.getVotes(voter);
     return votes ?? null;
   } catch (error) {
-    console.error('Address not found! Please enter a valid address', error);
-    toast.error('Address not found! Please enter a valid address');
+    console.error('Error fetching votes:', error);
     return null;
   }
 };
