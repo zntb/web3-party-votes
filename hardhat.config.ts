@@ -1,9 +1,6 @@
 import 'dotenv/config';
 import { HardhatUserConfig } from 'hardhat/config';
 import '@nomicfoundation/hardhat-toolbox';
-import '@nomicfoundation/hardhat-verify';
-import '@typechain/hardhat';
-import 'hardhat-gas-reporter';
 
 const config: HardhatUserConfig = {
   solidity: {
@@ -47,7 +44,7 @@ const config: HardhatUserConfig = {
     artifacts: './artifacts',
   },
   gasReporter: {
-    enabled: process.env.REPORT_GAS === 'true', // Only enable if REPORT_GAS=true
+    enabled: process.env.REPORT_GAS !== undefined,
     currency: 'USD',
   },
 };
